@@ -21,7 +21,17 @@
     New-ItemProperty -path "$Path$('RC4 40')$([char]0x2215)128" -PropertyType DWORD -Value '0' -Name 'Enabled'
 }
 
-
+<# 
+ .Synopsis 
+     Disable insecure versions of TLS on Windows.  Disables TLS 1.0 and TLS 1.1  
+     Vasken Houdoverdov
+ .Example
+     Disable-Tls -DisableVersion1_0
+ .Example
+     Disable-Tls -DisableVersion1_1
+ .Example
+     Disable-Tls -DisableVersion1_0 -DisableVersion1_1    
+ #> 
 Function Disable-Tls 
 {
 Param([Switch]$DisableVersion1_0,
@@ -34,7 +44,7 @@ Param([Switch]$DisableVersion1_0,
     New-ItemProperty -path "$Path$('TLS 1.0\Server')" -name 'Enabled' -value '0' -PropertyType 'DWord' -Force | Out-Null
     New-ItemProperty -path "$Path$('TLS 1.0\Server')" -name 'DisabledByDefault' -value 1 -PropertyType 'DWord' -Force | Out-Null
 
-    New-Item 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.0\Client' -Force | Out-Null
+    New-Item "$Path$('TLS 1.0\Client')" -Force | Out-Null
     New-ItemProperty -path "$Path$('TLS 1.0\Client')" -name 'Enabled' -value '0' -PropertyType 'DWord' -Force | Out-Null
     New-ItemProperty -path "$Path$('TLS 1.0\Client')" -name 'DisabledByDefault' -value 1 -PropertyType 'DWord' -Force | Out-Null}
 
