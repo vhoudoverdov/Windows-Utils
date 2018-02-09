@@ -47,3 +47,4 @@ Param([Switch]$DisableVersion1_0,
     New-ItemProperty -path "$Path$('TLS 1.1\Client')" -name 'Enabled' -value '0' -PropertyType 'DWord' -Force | Out-Null
     New-ItemProperty -path "$Path$('TLS 1.1\Client')" -name 'DisabledByDefault' -value 1 -PropertyType 'DWord' -Force | Out-Null}
 }
+Export-ModuleMember *
